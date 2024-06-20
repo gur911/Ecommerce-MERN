@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Login from "./Components/User/Login.jsx";
 import Profile from "./Components/User/Profile.jsx";
 import Cart from "./Components/Cart.jsx";
+import Address from "./Components/Address.jsx"
 
 function App() {
   // const {data} = useContext(AppContext)// ye method ye btara h ki paas wale provider ko call krke data do
@@ -26,6 +27,7 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/profile" element={<Profile/>}/>
         <Route path="/cart" element={<Cart/>}/>
+        <Route path="/shipping" element={<Address/>}/>
       </Routes>
     </Router>
   );

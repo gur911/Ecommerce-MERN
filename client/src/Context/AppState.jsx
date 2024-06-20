@@ -14,6 +14,7 @@ const AppState = (props) => {
   const [user,setUser] = useState()
   const [cart,setCart] = useState({items:[]})
   const [reload,setReload] = useState(false);
+  const [userAddress, setUserAddress] = useState("");
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -35,6 +36,7 @@ const AppState = (props) => {
 
     fetchProduct();
     userCart();
+    getAddress();
   }, [token]);
 
   useEffect(()=>{
@@ -274,6 +276,58 @@ const AppState = (props) => {
     //  setUser("user cart ",api);
   };
 
+  //  Add Shipping Address
+  const shippingAddress = async (
+    fullName,
+    address,
+    city,
+    state,
+    country,
+    pincode,
+    phoneNumber
+  ) => {
+    const api = await axios.post(
+      `${url}/address/add`,
+      { fullName, address, city, state, country, pincode, phoneNumber },
+      {
+        headers: {
+          "Content-Type": "Application/json",
+          "Auth": token,
+        },
+        withCredentials: true,
+      }
+    );
+    setReload(!reload);
+    // console.log("remove item from cart ",api);
+    toast.success(api.data.message, {
+      position: "top-right",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Bounce,
+    });
+    return api.data;
+    //  setCart(api.data.cart);
+    //  setUser("user cart ",api);
+  };
+
+  // get User latest address
+  const getAddress = async () => {
+    const api = await axios.get(`${url}/address/get`, {
+      headers: {
+        "Content-Type": "Application/json",
+        "Auth": token,
+      },
+      withCredentials: true,
+    });
+    //  console.log("user address ", api.data.userAddress);
+    setUserAddress(api.data.userAddress);
+  };
+
   return (
     <AppContext.Provider value={{ 
       products,
@@ -291,7 +345,9 @@ const AppState = (props) => {
       cart,
       decreaseQty,
       removeFromCart,
-      clearCart }}>
+      clearCart,
+      shippingAddress,
+      userAddress }}>
       {props.children}
     </AppContext.Provider>
   );
