@@ -5,6 +5,7 @@ import userRouter from './Routes/User.routes.js'
 import productRouter from './Routes/Product.routes.js'
 import cartRouter from './Routes/Cart.routes.js'
 import addressRouter from './Routes/Address.routes.js'
+import paymentRouter from './Routes/Payment.routes.js'
 import cors from 'cors'
 
 const app = express();
@@ -32,6 +33,9 @@ app.use('/api/cart',cartRouter);
 
 // address router 
 app.use('/api/address',addressRouter);
+
+// payment router
+app.use('/api/payment',paymentRouter);
 
 mongoose.connect("mongodb+srv://gursewaksinghynr73:fece1JKOfX4tT4jd@cluster0.maplv05.mongodb.net/",{
     dbName:"ECOMMERce-MERN"
