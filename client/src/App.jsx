@@ -13,6 +13,7 @@ import Profile from "./Components/User/Profile.jsx";
 import Cart from "./Components/Cart.jsx";
 import Address from "./Components/Address.jsx"
 import Checkout from "./Components/Checkout.jsx";
+import OrderConfirmation from "./Components/OrderConfirmation.jsx"
 
 function App() {
   // const {data} = useContext(AppContext)// ye method ye btara h ki paas wale provider ko call krke data do
@@ -30,6 +31,7 @@ function App() {
         <Route path="/cart" element={<Cart/>}/>
         <Route path="/shipping" element={<Address/>}/>
         <Route path="/checkout" element={<Checkout/>}/>
+        <Route path="/orderconfirmation" element={<OrderConfirmation/>}/>
       </Routes>
     </Router>
   );

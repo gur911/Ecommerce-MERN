@@ -15,6 +15,7 @@ const AppState = (props) => {
   const [cart,setCart] = useState({items:[]})
   const [reload,setReload] = useState(false);
   const [userAddress, setUserAddress] = useState("");
+  const [userOrder, setUserOrder] = useState([]);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -37,7 +38,8 @@ const AppState = (props) => {
     fetchProduct();
     userCart();
     getAddress();
-  }, [token]);
+    UserOrder();
+  }, [token,userOrder,userAddress]);
 
   useEffect(()=>{
     let lstoken = localStorage.getItem('token');
@@ -328,6 +330,22 @@ const AppState = (props) => {
     setUserAddress(api.data.userAddress);
   };
 
+  // get User Order
+  const UserOrder = async () => {
+    const api = await axios.get(`${url}/payment/userorder`, {
+      headers: {
+        "Content-Type": "Application/json",
+        "Auth": token,
+      },
+      withCredentials: true,
+    });
+    //  console.log("user order ", api.data);
+     setReload(!reload);
+    // setUserAddress(api.data.userAddress);
+    setUserOrder(api.data);
+  };
+  console.log("UserOrder",userOrder);
+
   return (
     <AppContext.Provider value={{ 
       products,
@@ -347,7 +365,8 @@ const AppState = (props) => {
       removeFromCart,
       clearCart,
       shippingAddress,
-      userAddress }}>
+      userAddress,
+      userOrder }}>
       {props.children}
     </AppContext.Provider>
   );
