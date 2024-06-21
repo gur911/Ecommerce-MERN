@@ -52,3 +52,7 @@ body ::-webkit-scrollbar{ /*//feature to remove scroll bar*/
   background-color: black;
   cursor: pointer;
 }
+td{
+  vertical-align:middle;
+  cursor: pointer;
+}
