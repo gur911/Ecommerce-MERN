@@ -30,7 +30,7 @@ const AppState = (props) => {
         setProducts(api.data.products);
         setFilteredData(api.data.products);
         userProfile();
-      } catch (error) {
+      } catch (error) {4
         console.error('Error fetching products:', error);
       }
     };
@@ -39,7 +39,7 @@ const AppState = (props) => {
     userCart();
     getAddress();
     UserOrder();
-  }, [token,userOrder,userAddress]);
+  }, [token]);
 
   useEffect(()=>{
     let lstoken = localStorage.getItem('token');
@@ -326,6 +326,7 @@ const AppState = (props) => {
       },
       withCredentials: true,
     });
+    // shippingAddress();
     //  console.log("user address ", api.data.userAddress);
     setUserAddress(api.data.userAddress);
   };
@@ -340,11 +341,12 @@ const AppState = (props) => {
       withCredentials: true,
     });
     //  console.log("user order ", api.data);
-     setReload(!reload);
+    //  setReload(!reload);
+    //  getAddress();
     // setUserAddress(api.data.userAddress);
     setUserOrder(api.data);
   };
-  console.log("UserOrder",userOrder);
+  // console.log("UserOrder",userOrder);
 
   return (
     <AppContext.Provider value={{ 
@@ -366,7 +368,8 @@ const AppState = (props) => {
       clearCart,
       shippingAddress,
       userAddress,
-      userOrder }}>
+      userOrder,
+      getAddress,UserOrder }}>
       {props.children}
     </AppContext.Provider>
   );

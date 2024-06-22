@@ -3,21 +3,29 @@ import AppContext from "../Context/AppContext";
 import ShowOrderProduct from "./ShowOrderProduct.jsx";
 
 const OrderConfirmation = () => {
-  const { userOrder } = useContext(AppContext);
+  const { userOrder, UserOrder ,getAddress, userAddress } = useContext(AppContext);
   const [latestOrder, setLatestOrder] = useState({});
+
   useEffect(() => {
-    if (userOrder&& userOrder.length > 0) {
+    // Fetch user address on component mount
+    UserOrder();
+    getAddress();
+  }, []); // Only fetch once on component mount
+
+  useEffect(() => {
+    // Set latestOrder when userOrder changes
+    if (userOrder && userOrder.length > 0) {
       setLatestOrder(userOrder[0]);
     }
-  }, [userOrder]);
+  }, [userOrder,userAddress]);
 
   console.log("latestOrder", latestOrder);
 
   return (
     <>
       <div className="container my-3">
-        <h1 className="text-center">Your order has been confirm,</h1>
-        <h3 className="text-center">It will delivered soon</h3>
+        <h1 className="text-center">Your order has been confirmed,</h1>
+        <h3 className="text-center">It will be delivered soon</h3>
       </div>
 
       <div className="container">
@@ -25,46 +33,39 @@ const OrderConfirmation = () => {
           <thead className="bg-dark">
             <tr>
               <th scope="col" className="bg-dark text-light text-center">
-                OrderItems
+                Order Items
               </th>
-
               <th scope="col" className="bg-dark text-light text-center">
-                OrderDetails & ShippingAddress
+                Order Details & Shipping Address
               </th>
             </tr>
           </thead>
           <tbody className="bg-dark">
             <tr>
               <td className="bg-dark text-light">
-                {/* <TableProduct cart={cart} /> */}
                 <ShowOrderProduct items={latestOrder?.orderItems} />
               </td>
               <td className="bg-dark text-light">
                 <ul style={{ fontWeight: "bold" }}>
-                  <li>OrderId : {latestOrder?.orderId}</li>
-                  <li>PaymentId : {latestOrder?.paymentId}</li>
-                  <li>PaymentStatus : {latestOrder?.payStatus}</li>
-                  <li>Name : {latestOrder?.userShipping?.fullName}</li>
-                  <li>Phone : {latestOrder?.userShipping?.phoneNumber}</li>
-                  <li>Country : {latestOrder?.userShipping?.country}</li>
-                  <li>State : {latestOrder?.userShipping?.state}</li>
-                  <li>PinCode : {latestOrder?.userShipping?.pincode}</li>
-                  <li>Near By : {latestOrder?.userShipping?.address}</li>
+                  <li>OrderId: {latestOrder?.orderId}</li>
+                  <li>PaymentId: {latestOrder?.paymentId}</li>
+                  <li>PaymentStatus: {latestOrder?.payStatus}</li>
+                  {userAddress && (
+                    <>
+                      <li>Name: {userAddress.fullName}</li>
+                      <li>Phone: {userAddress.phoneNumber}</li>
+                      <li>Country: {userAddress.country}</li>
+                      <li>State: {userAddress.state}</li>
+                      <li>PinCode: {userAddress.pincode}</li>
+                      <li>Near By: {userAddress.address}</li>
+                    </>
+                  )}
                 </ul>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-
-      {/* <div className="container text-center my-5">
-        <button
-          className="btn btn-secondary btn-lg"
-          style={{ fontWeight: "bold" }}
-        >
-          Procced To Pay
-        </button>
-      </div> */}
     </>
   );
 };

@@ -18,8 +18,8 @@ const Navbar = () => {
     );
   };
 
-  const filterbyPrice = (price) => {
-    setFilteredData(products.filter((data) => data.price >= price));
+  const filterbyPrice = (minPrice, maxPrice) => {
+    setFilteredData(products.filter((data) => data.price >= minPrice && data.price <= maxPrice));
   };
 
   const submitHandler = (e) => {
@@ -112,19 +112,19 @@ const Navbar = () => {
             >
               Headphones
             </div>
-            <div className="items" onClick={() => filterbyPrice(16000)}>
+            <div className="items" onClick={() => filterbyPrice(0, 16000)}>
               16000
             </div>
-            <div className="items" onClick={() => filterbyPrice(26000)}>
+            <div className="items" onClick={() => filterbyPrice(16001, 26000)}>
               26000
             </div>
-            <div className="items" onClick={() => filterbyPrice(50000)}>
+            <div className="items" onClick={() => filterbyPrice(26001, 50000)}>
               50000
             </div>
-            <div className="items" onClick={() => filterbyPrice(70000)}>
+            <div className="items" onClick={() => filterbyPrice(50001, 70000)}>
               70000
             </div>
-            <div className="items" onClick={() => filterbyPrice(90000)}>
+            <div className="items" onClick={() => filterbyPrice(70001, 90000)}>
               90000
             </div>
           </div>
